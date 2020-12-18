@@ -1,10 +1,7 @@
 <?php
-    //user: debian-sys-maint
-    // password: l6pdxQO6O3wIFWZs
-
     $servername = "localhost";
-    $username = "debian-sys-maint";
-    $password = "l6pdxQO6O3wIFWZs";
+    $username = "";
+    $password = "";
     $dbname = "kaffa_bunn";
 
     // crearte connection
