@@ -1,0 +1,3 @@
+[1103/092448.649:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1104/135232.050:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1104/140037.307:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Kestrel Cervantes\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\24e74121-36cb-459b-8152-08cc8a030720: The system cannot find the path specified. (0x3)
