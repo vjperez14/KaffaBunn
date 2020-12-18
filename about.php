@@ -1,5 +1,4 @@
 <?php
-// test
 session_start();
 $isActive = isset($_SESSION['email']);
 if ($isActive) {
