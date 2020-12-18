@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 13, 2020 at 09:12 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.34
+-- Host: localhost:3306
+-- Generation Time: Dec 18, 2020 at 05:40 AM
+-- Server version: 5.7.32-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -18,8 +17,56 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `kaffabunn`
+-- Database: `kaffa_bunn`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `debit_card`
+--
+
+CREATE TABLE `debit_card` (
+  `card_id` int(10) NOT NULL,
+  `cardnumber` bigint(16) NOT NULL,
+  `csv` int(3) NOT NULL,
+  `expdatem` int(2) NOT NULL,
+  `expdatey` int(2) NOT NULL,
+  `balance` decimal(6,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `debit_card`
+--
+
+INSERT INTO `debit_card` (`card_id`, `cardnumber`, `csv`, `expdatem`, `expdatey`, `balance`) VALUES
+(2, 5242613798654354, 221, 7, 29, '11476'),
+(3, 5348544915306165, 111, 11, 27, '19835');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_table`
+--
+
+CREATE TABLE `orders_table` (
+  `orders_id` int(10) NOT NULL,
+  `cust_name` varchar(50) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `cart` varchar(50) NOT NULL,
+  `quantity` varchar(50) NOT NULL,
+  `amount` int(5) NOT NULL,
+  `status` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `orders_table`
+--
+
+INSERT INTO `orders_table` (`orders_id`, `cust_name`, `address`, `phone`, `email`, `cart`, `quantity`, `amount`, `status`) VALUES
+(23, 'Venice Cervantes', ', 24 Harvard Street, Brgy. Socorro, Cubao, Quezon City, 1109', '09999231139', 'venice123@gmail.com', ',9,13,34', ',1,1,1', 0, 'Debit Card');
 
 -- --------------------------------------------------------
 
@@ -46,7 +93,7 @@ INSERT INTO `products` (`product_id`, `name`, `category`, `description`, `price`
 (4, 'ICED LATTE', 'drink', 'An espresso-based drink with chilled milk, sugar syrup, topped with whipped milk.', 145),
 (5, 'HOT MAPLE LATTE', 'drink', 'An espresso-based drink with sugar syrup mixed with whipped milk and crushed ice.', 185),
 (6, 'CAFÉ AU LAIT', 'drink', 'Equal parts of drip coffee and steamed milk with a foamy cap.', 125),
-(7, 'CAFE AMERICANO', 'drink', 'An espresso with hot water, giving it a similar strength to, but different flavor from traditionally', 125),
+(7, 'CAFE AMERIKANO', 'drink', 'An espresso with hot water, giving it a similar strength to, but different flavor from traditionally', 125),
 (8, 'CAFE MISTO', 'drink', 'A one-to-one combination of fresh-brewed coffee and steamed milk add up to one distinctly delicious ', 145),
 (9, 'PUMPKIN CREAM COLD BREW', 'drink', 'Sweetened with vanilla, and then topped with a pumpkin cream cold foam and a dusting of pumpkin spic', 195),
 (10, 'ICED SALTED CARAMEL MOCHA', 'drink', 'A delightful combination of espresso, milk, mocha sauce and toffeenut–flavored syrup over ice, toppe', 205),
@@ -77,9 +124,74 @@ INSERT INTO `products` (`product_id`, `name`, `category`, `description`, `price`
 (35, 'RED VELVET CAKE', 'pastry', 'The best red velvet cake with superior buttery, vanilla, and cocoa flavors, as well as a delicious t', 255),
 (36, 'BUTTERSCOTCH PUDDING', 'pastry', 'Sweet desserts of milk or fruit juice variously flavoured and thickened with cornstarch, arrowroot, ', 230);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registered_accounts`
+--
+
+CREATE TABLE `registered_accounts` (
+  `account_id` int(11) NOT NULL,
+  `firstname` varchar(25) NOT NULL,
+  `lastname` varchar(25) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `city` varchar(25) NOT NULL,
+  `street` varchar(25) NOT NULL,
+  `streetopt` varchar(25) NOT NULL,
+  `town` varchar(25) NOT NULL,
+  `zip` varchar(5) NOT NULL,
+  `phone` varchar(18) NOT NULL,
+  `cart` varchar(100) NOT NULL,
+  `quantity` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `registered_accounts`
+--
+
+INSERT INTO `registered_accounts` (`account_id`, `firstname`, `lastname`, `email`, `password`, `city`, `street`, `streetopt`, `town`, `zip`, `phone`, `cart`, `quantity`) VALUES
+(24, 'Vince John', 'Perez', 'perezvj14@gmail.com', '5c9269d977ec1029b59a912a04bc4683', 'Quezon City', 'Peacock St.', '5315 Flora Vista', 'Brgy. Commonwealth', '1121', '09359148135', ',1', ',1'),
+(31, 'Kestrel', 'Cervantes', 'kestrel.0425@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b', 'Manila City', '24 Harvard Street', '', 'Brgy. Socorro', '1109', '09999231139', '0', '0'),
+(32, 'Venice', 'Cervantes', 'venice123@gmail.com', 'fbf968d5fc8f3e17ae50869dd4e58a6b', 'Cubao, Quezon City', '24 Harvard Street', '', 'Brgy. Socorro', '1109', '09999231139', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(15) DEFAULT NULL,
+  `password` varchar(24) DEFAULT NULL,
+  `cart` varchar(100) NOT NULL,
+  `quantity` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `password`, `cart`, `quantity`) VALUES
+(1, 'rpntjohnmicko', 'yeet', '0,1,2', '0,1,1'),
+(2, 'admin', 'admin', '', '');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `debit_card`
+--
+ALTER TABLE `debit_card`
+  ADD PRIMARY KEY (`card_id`);
+
+--
+-- Indexes for table `orders_table`
+--
+ALTER TABLE `orders_table`
+  ADD PRIMARY KEY (`orders_id`);
 
 --
 -- Indexes for table `products`
@@ -88,16 +200,46 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `registered_accounts`
+--
+ALTER TABLE `registered_accounts`
+  ADD PRIMARY KEY (`account_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `debit_card`
+--
+ALTER TABLE `debit_card`
+  MODIFY `card_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `orders_table`
+--
+ALTER TABLE `orders_table`
+  MODIFY `orders_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-COMMIT;
-
+--
+-- AUTO_INCREMENT for table `registered_accounts`
+--
+ALTER TABLE `registered_accounts`
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
