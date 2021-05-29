@@ -1,12 +1,13 @@
 <?php
-  session_start();
-  $isActive = isset($_SESSION['email']);
-  if($isActive){
-    $user = $_SESSION['email'];
-  }
+	session_start();
+	$isActive = isset($_SESSION['email']);
+	if($isActive){
+		$user = $_SESSION['email'];
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title>Kaffa Bunn Cafe</title>
 	<link rel="icon" href="images/logo.png" type="image/gif">
@@ -39,6 +40,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/index.css">
 </head>
+
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light ftco_navbar bg-light ftco-navbar-light" id="ftco-navbar">
 		<div class="container">
@@ -79,7 +81,7 @@
 							}
 						?>
 					</nav>
-					
+
 					<li class="nav-item cart" onClick='fetchCart();' id="cartNav" <?php
 						if(!$isActive){
 							echo "style='display:none;'";
@@ -87,8 +89,9 @@
 						else{
 							echo "style='margin-top: 3%; margin-left: 5%;'";
 						}
-						?>><img  data-toggle="modal" data-target="#cartModal" src="https://img.icons8.com/ultraviolet/40/000000/shopping-cart.png"/>
-						</li>
+						?>><img data-toggle="modal" data-target="#cartModal"
+							src="https://img.icons8.com/ultraviolet/40/000000/shopping-cart.png" />
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -125,7 +128,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button"  onclick="checkOut(document.getElementById('total').innerHTML);" class="btn btn-primary"
+					<button type="button" onclick="checkOut(document.getElementById('total').innerHTML);"
+						class="btn btn-primary"
 						style="border-radius: 25px; padding: 20px; font-family: Poppins; font-size: 15px; font-weight: bold;">Proceed
 						to Checkout <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
 				</div>
@@ -134,7 +138,7 @@
 	</div>
 	<div class="cd-user-modal" id="loginModal">
 		<!-- this is the entire modal form, including the background -->
-		<div class="cd-user-modal-container" >
+		<div class="cd-user-modal-container">
 			<!-- this is the container wrapper -->
 			<center>
 				<br>
@@ -150,14 +154,16 @@
 			<div id="cd-login">
 				<!-- log in form -->
 				<form class="cd-form" method="POST" action="php/loginprocess.php">
-					<p class="fieldset" >
+					<p class="fieldset">
 						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="email" name="email" type="email" placeholder="E-mail">
+						<input class="full-width has-padding has-border" id="email" name="email" type="email"
+							placeholder="E-mail">
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signin-password">Password</label>
-						<input class="full-width has-padding has-border" id="loginpass" name="loginpass" type="password" placeholder="Password">
+						<input class="full-width has-padding has-border" id="loginpass" name="loginpass" type="password"
+							placeholder="Password">
 						<a href="#0" class="hide-password">Hide</a>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
@@ -166,7 +172,7 @@
 							$error = $_SESSION["error"];
 							echo "<span style='color:red;'>$error</span>";
 						}
-                	?> 
+					?>
 					<p class="fieldset">
 						<input type="checkbox" id="remember-me" checked>
 						<label for="remember-me">Remember me</label>
@@ -177,15 +183,14 @@
 					</p>
 					<br><br>
 				</form>
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-login -->
 			<div id="cd-signup">
 				<!-- sign up form -->
 				<form class="cd-form" id="RegForm" method="POST">
 					<p class="fieldset">
 						<label class="image-replace cd-username" for="refirstname">First Name</label>
-						<input class="full-width has-padding has-border" id="regfirstname" name="regfirstname" type="text"
-							placeholder="First Name" required>
+						<input class="full-width has-padding has-border" id="regfirstname" name="regfirstname"
+							type="text" placeholder="First Name" required>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 					<p class="fieldset">
@@ -202,11 +207,22 @@
 					</p>
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="regpassword">Password</label>
-						<input class="full-width has-padding has-border" id="regpassword" name="regpassword" type="password"
-							placeholder="Password" required>
-						<!-- <a href="#0" class="hide-password">Hide</a> -->
+						<input class="full-width has-padding has-border" id="regpassword" name="regpassword"
+							type="password" placeholder="Password" onkeyup="passMatch(), mustContain()" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}" title="Must contain at least one number and one uppercase and lowercase letter, and at least minimum of 8 characters and maximum of 16 characters" required>
 						<span class="cd-error-message">Error message here!</span>
 					</p>
+					<p>Password must contain:</p>
+					<p id="numchar">❌ minimum of 8 characters and maximum 16 characters</p>
+					<p id="numeric">❌ atleast 1 numeric or special character</p>
+					<p id="upper">❌ atleast 1 uppercase letter</p>
+					<p id="lower">❌ atleast 1 lowercase letter</p>
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="regconpassword">Confirm Password</label>
+						<input class="full-width has-padding has-border" id="regconpassword" name="regconpassword"
+							type="password" placeholder="Password" onkeyup="passMatch()" required>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+					<span id="error-password-match"></span>
 					<p class="fieldset">
 						<label class="image-replace cd-city" for="regcity">City</label>
 						<input class="full-width has-padding has-border" id="regcity" name="regcity" type="text"
@@ -217,16 +233,16 @@
 						<div class="col-md-6">
 							<p class="fieldset">
 								<label class="image-replace cd-street" for="regstreet">Street Address</label>
-								<input class="full-width has-padding has-border" id="regstreet" name="regstreet" type="text"
-									placeholder="Street Address" required>
+								<input class="full-width has-padding has-border" id="regstreet" name="regstreet"
+									type="text" placeholder="Street Address" required>
 								<span class="cd-error-message">Error message here!</span>
 							</p>
 						</div>
 						<div class="col-md-6">
 							<p class="fieldset">
 								<label class="image-replace cd-street" for="regstreetopt">Street Address</label>
-								<input class="full-width has-padding has-border" id="regstreetopt" name="regstreetopt" type="text"
-									placeholder="Appartment, suite, unit etc: (optional)">
+								<input class="full-width has-padding has-border" id="regstreetopt" name="regstreetopt"
+									type="text" placeholder="Appartment, suite, unit etc: (optional)">
 								<span class="cd-error-message">Error message here!</span>
 							</p>
 						</div>
@@ -252,17 +268,20 @@
 					</div>
 					<p class="fieldset">
 						<label class="image-replace cd-phone" for="regphone">Phone</label>
-						<input class="full-width has-padding has-border" id="regphone" name="regphone" type="text" onkeypress="return onlyNumberKey(event)" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" maxlenght="11" title="Valid phone number format: XXX-XXX-XXXX"
+						<input class="full-width has-padding has-border" id="regphone" name="regphone" type="text"
+							onkeypress="return onlyNumberKey(event)"
+							oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+							type="number" maxlength="11" maxlenght="11" title="Valid phone number format: XXX-XXX-XXXX"
 							placeholder="Phone" required>
 						<span class="cd-error-message">Error message here!</span>
-						<script> 
-							function onlyNumberKey(evt) {   
+						<script>
+							function onlyNumberKey(evt) {
 								// Only ASCII charactar in that range allowed 
-								var ASCIICode = (evt.which) ? evt.which : evt.keyCode 
-								if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
-									return false; 
-								return true; 
-							} 
+								var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+								if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+									return false;
+								return true;
+							}
 						</script>
 					</p>
 					<p class="fieldset">
@@ -270,11 +289,9 @@
 						<label for="accept-terms">I agree to the <a href="#0">Terms and Condition.</a></label>
 					</p>
 					<p class="fieldset">
-						<!-- <button type="button" id="savebtn" class="btn btn-primary py-3 px-5"> Sign Up </button> -->
 						<input class="full-width has-padding" type="submit" id="savebtn" value="Create account">
 					</p>
 				</form>
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-signup -->
 			<div id="cd-reset-password">
 				<!-- reset password form -->
@@ -397,529 +414,661 @@
 						</div>
 						<div class="col-md-12 d-flex align-items-center">
 							<div class="tab-content ftco-animate" id="v-pills-tabContent">
-				                  <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
-				                    <div class="row">
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="single-prod.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink1.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000  ; font-size: 17px; ">An espresso-based drink with chocolate syrup, chilled milk, crushed ice and topped with whipped milk.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="single-prod.php" style="color: black;"><b>Iced Mocha</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱165.00</span></p>
-				                            
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('ICED MOCHA');\"";
-				                              	}
-				                              ?>
-				                              style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to Cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink2.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Espresso based drink with equal parts of steamed milk and foamed milk.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Hot Cappucino</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱135.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('HOT CAPPUCINO');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink3.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Chewy and soft mocha pudding on a frappuccino</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>White Mocha Pudding Frappe</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱215.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('WHITE MOCHA PUDDING FRAPPE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink4.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink4.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">An espresso-based drink with chilled milk, sugar syrup, topped with whipped milk.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Iced Latte</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱145.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('ICED LATTE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink5.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink5.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">An espresso-based drink with sugar syrup mixed with whipped milk and crushed ice.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Hot Maple Latte</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱185.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('HOT MAPLE LATTE');\"";
-				                              	}
-				                              ?>
-				                              style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink6.php" class="gallery img d-flex align-items-center" style="background-image: url(images/drink6.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Equal parts of drip coffee and steamed milk with a foamy cap.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Café Au Lait</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱125.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('CAFE AU LAIT');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                    </div>
-				                  </div>
-				                  <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
-				                    <div class="row">
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food1.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Classic Pork Adobo flakes, served with Java rice & Kare-kare Soup. Served with 12oz. Lemonade and Dessert.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Adobo Flakes Kare-Kare</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱269.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('ADOBO FLAKES KARE-KARE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food2.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">Pan fried dory fish fillet infused in zesty Provencal Sauce. Add ₱35 for a 12 oz. of Iced Tea or Lemonade</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Dory Provencal</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱270.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('DORY PROVENCAL');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food3.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">Cooked shiitake mushroom, cheese and mayonnaise, rolled in a specially made soft and thin piece of crepe.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Mushroom & Cheese Crepe</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱155.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo " onClick=\"addToCart('MUSHROOM AND CHEESE CREPE');\"";
-				                              	}
-				                              ?>
-				                              style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food4.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">A unique garlicky and smoky blend of Spanish Chorizo sauteed in bell peppers.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Gourmet Spanish Chorizo Cubana</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱275.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('GOURMET SPANISH CHORIZO CUBANA');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food5.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">Eggs, beaten light and fluffy, generously filled with Shitake mushroom and cheese and folded over.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>French Mushroom Omelete</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱225.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('FRENCH MUSHROOM OMELETTE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/food6.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">Our Signature Pasta, sweet and spicy medley of flavors, light tomato basil sauce, capers, tuna chunks, black olives and olive oil.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Pasta Ala Carlo</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱235.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('PASTA ALA CARLO');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                    </div>
-				                  </div>
-				                  <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
-				                    <div class="row">
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry1.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px;">A moist dark chocolate chiffon with dark chocolate mousse and dark chocolate crumbs on top.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Tablea Blackout Cake</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱175.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('TABLEA BLACKOUT CAKE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry2.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Sweet, juicy strawberries in a rich, cream cheese mousse base, nestled on a buttery melt in the mouth crust.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Strawberry Cheesecake</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱205.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('STRAWBERRY CHEESECAKE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry3.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Rich, moist muffin mixed with blueberry and sprinkled with crunchy toping made of crumbled flavored dough (streusel).</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Muffins</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱70.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('MUFFINS');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry4.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Rich fruit bar made in dates and walnuts</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Food for the Gods</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱59.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('FOOD FOR THE GODS');\"";
-				                              	}
-				                              ?>
-				                              style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry5.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">Made from bananas, cream and toffee, combined with a buttery biscuit base.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Banoffee Pie</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱170.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('BANOFEE PIE');\"";
-				                              	}
-				                              ?>
-				                              style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                      <div class="col-md-4 text-center">
-				                        <div class="menu-wrap">
-				                          <div class="c1">
-				                            <a href="drink2.php" class="gallery img d-flex align-items-center" style="background-image: url(images/pastry6.jpg); border-radius: 50%;">
-				                              <div class="middle">
-				                                <div class="align-items-center">
-				                                  <br><br><p style="font-family: Lobster; color: #800000; font-size: 17px; ">A deliciously light flaky pastry made from many layers of specially prepared pastry dough filled with tuna filling.</p></i>
-				                                </div>
-				                              </div>
-				                            </a>
-				                          </div>
-				                          <br>
-				                          <div class="text">
-				                            <h3><a href="#" style="color: black;"><b>Tuna Pie</b></a></h3>
-				                            <p>Available for dine-in and take out</p>
-				                            <p class="price"><span style="color: #D2691E; font-size:17px;">₱60.00</span></p>
-				                            <p>
-				                              <a class="btn btn-primary btn-outline-primary" 
-				                              <?php
-				                              	if($isActive){
-				                              		echo "onClick=\"addToCart('TUNA PIE');\"";
-				                              	}
-				                              ?>
-				                               style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to cart</a> &nbsp
-				                            </p>
-				                          </div>
-				                        </div>
-				                      </div>
-				                    </div>
-				                  </div>
-				                  <center>
-				                  <div class="form-group ml-md-4">
-				                    <input type="submit" onclick="location.href='menu.php'" value="View Full Menu" class="btn btn-primary py-3 px-4" style="color: #654321; width: 50%; font-size: 20px; font-family: 'Antic Slab'; font-weight: bold; border-radius: 25px;">
-				                  </div>
-				                  </center>
-				                </div>
+								<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
+									aria-labelledby="v-pills-1-tab">
+									<div class="row">
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="single-prod.php"
+														class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink1.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000  ; font-size: 17px; ">
+																	An espresso-based drink with chocolate syrup,
+																	chilled milk, crushed ice and topped with whipped
+																	milk.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="single-prod.php" style="color: black;"><b>Iced
+																Mocha</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱165.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('ICED MOCHA');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															Cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink2.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Espresso based drink with equal parts of steamed
+																	milk and foamed milk.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Hot Cappucino</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱135.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('HOT CAPPUCINO');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink3.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Chewy and soft mocha pudding on a frappuccino</p>
+																</i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>White Mocha Pudding
+																Frappe</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱215.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('WHITE MOCHA PUDDING FRAPPE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink4.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink4.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	An espresso-based drink with chilled milk, sugar
+																	syrup, topped with whipped milk.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Iced Latte</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱145.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('ICED LATTE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink5.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink5.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	An espresso-based drink with sugar syrup mixed with
+																	whipped milk and crushed ice.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Hot Maple Latte</b></a>
+													</h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱185.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('HOT MAPLE LATTE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink6.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/drink6.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Equal parts of drip coffee and steamed milk with a
+																	foamy cap.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Café Au Lait</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱125.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('CAFE AU LAIT');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="v-pills-2" role="tabpanel"
+									aria-labelledby="v-pills-2-tab">
+									<div class="row">
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food1.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Classic Pork Adobo flakes, served with Java rice &
+																	Kare-kare Soup. Served with 12oz. Lemonade and
+																	Dessert.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Adobo Flakes
+																Kare-Kare</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱269.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('ADOBO FLAKES KARE-KARE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food2.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	Pan fried dory fish fillet infused in zesty
+																	Provencal Sauce. Add ₱35 for a 12 oz. of Iced Tea or
+																	Lemonade</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Dory Provencal</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱270.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('DORY PROVENCAL');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food3.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	Cooked shiitake mushroom, cheese and mayonnaise,
+																	rolled in a specially made soft and thin piece of
+																	crepe.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Mushroom & Cheese
+																Crepe</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱155.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo " onClick=\"addToCart('MUSHROOM AND CHEESE CREPE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food4.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	A unique garlicky and smoky blend of Spanish Chorizo
+																	sauteed in bell peppers.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Gourmet Spanish Chorizo
+																Cubana</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱275.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('GOURMET SPANISH CHORIZO CUBANA');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food5.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	Eggs, beaten light and fluffy, generously filled
+																	with Shitake mushroom and cheese and folded over.
+																</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>French Mushroom
+																Omelete</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱225.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('FRENCH MUSHROOM OMELETTE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/food6.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	Our Signature Pasta, sweet and spicy medley of
+																	flavors, light tomato basil sauce, capers, tuna
+																	chunks, black olives and olive oil.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Pasta Ala Carlo</b></a>
+													</h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱235.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('PASTA ALA CARLO');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="v-pills-3" role="tabpanel"
+									aria-labelledby="v-pills-3-tab">
+									<div class="row">
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry1.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px;">
+																	A moist dark chocolate chiffon with dark chocolate
+																	mousse and dark chocolate crumbs on top.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Tablea Blackout
+																Cake</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱175.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('TABLEA BLACKOUT CAKE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry2.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Sweet, juicy strawberries in a rich, cream cheese
+																	mousse base, nestled on a buttery melt in the mouth
+																	crust.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Strawberry
+																Cheesecake</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱205.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('STRAWBERRY CHEESECAKE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry3.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Rich, moist muffin mixed with blueberry and
+																	sprinkled with crunchy toping made of crumbled
+																	flavored dough (streusel).</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Muffins</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱70.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('MUFFINS');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry4.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Rich fruit bar made in dates and walnuts</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Food for the Gods</b></a>
+													</h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱59.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('FOOD FOR THE GODS');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry5.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	Made from bananas, cream and toffee, combined with a
+																	buttery biscuit base.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Banoffee Pie</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱170.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('BANOFEE PIE');\"";
+															}
+														?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4 text-center">
+											<div class="menu-wrap">
+												<div class="c1">
+													<a href="drink2.php" class="gallery img d-flex align-items-center"
+														style="background-image: url(images/pastry6.jpg); border-radius: 50%;">
+														<div class="middle">
+															<div class="align-items-center">
+																<br><br>
+																<p
+																	style="font-family: Lobster; color: #800000; font-size: 17px; ">
+																	A deliciously light flaky pastry made from many
+																	layers of specially prepared pastry dough filled
+																	with tuna filling.</p></i>
+															</div>
+														</div>
+													</a>
+												</div>
+												<br>
+												<div class="text">
+													<h3><a href="#" style="color: black;"><b>Tuna Pie</b></a></h3>
+													<p>Available for dine-in and take out</p>
+													<p class="price"><span
+															style="color: #D2691E; font-size:17px;">₱60.00</span></p>
+													<p>
+														<a class="btn btn-primary btn-outline-primary" <?php
+															if($isActive){
+																echo "onClick=\"addToCart('TUNA PIE');\"";
+															}
+				                              			?> style="border-radius: 25px;"><i class="fa fa-plus" aria-hidden="true"></i> Add to
+															cart
+														</a> &nbsp
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<center>
+									<div class="form-group ml-md-4">
+										<input type="submit" onclick="location.href='menu.php'" value="View Full Menu"
+											class="btn btn-primary py-3 px-4"
+											style="color: #654321; width: 50%; font-size: 20px; font-family: 'Antic Slab'; font-weight: bold; border-radius: 25px;">
+									</div>
+								</center>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1087,7 +1236,9 @@
 				<div class="col-md-12 text-center">
 					<p style="color: black;">
 						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script> Kaffa Bunn Cafe. All rights reserved.
+						<script>
+							document.write(new Date().getFullYear());
+						</script> Kaffa Bunn Cafe. All rights reserved.
 					</p>
 				</div>
 			</div>
@@ -1096,9 +1247,10 @@
 	<div id="ftco-loader" class="show fullscreen">
 		<svg class="circular" width="48px" height="48px">
 			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"stroke="#F96D00" />
+			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+				stroke="#F96D00" />
 		</svg></div>
-	
+
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/popper.min.js"></script>
@@ -1113,13 +1265,19 @@
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/jquery.timepicker.min.js"></script>
 	<script src="js/scrollax.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
+	</script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 	<!-- bootstrap -->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"> </script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"> </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+	</script>
 	<!-- custom script -->
 	<script src="script/validate.js"></script>
 
